@@ -5,25 +5,49 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
+angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', 'ngCordova'])
 
 .run(function($ionicPlatform) {
-  $ionicPlatform.ready(function() {
-    // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
-    // for form inputs)
-    if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
-      cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
-      cordova.plugins.Keyboard.disableScroll(true);
+	$ionicPlatform.ready(function() {
+		// Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
+		// for form inputs)
+		if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
+			cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
+			cordova.plugins.Keyboard.disableScroll(true);
+		}
+		if (window.StatusBar) {
+			// org.apache.cordova.statusbar required
+			StatusBar.styleLightContent();
+		}
 
-    }
-    if (window.StatusBar) {
-      // org.apache.cordova.statusbar required
-      StatusBar.styleLightContent();
-    }
+		Parse.initialize("vvvz4o7CcBGfI0yyIlpVBhrKWBDVO7ngD2mCW83Q", "r6UBazvd2nCr6ru9DTjjleUYDMj8zFnqI4uJMKfL");
+		
+		if (ionic.Platform.isAndroid()) {
+			alert("Android");
+		}
+		
+		if (ionic.Platform.isAndroid()) {
+			alert("Android");
+		}
 	
-	Parse.initialize("vvvz4o7CcBGfI0yyIlpVBhrKWBDVO7ngD2mCW83Q", "r6UBazvd2nCr6ru9DTjjleUYDMj8zFnqI4uJMKfL");
-	
-  });
+		if(!(ionic.Platform.isIOS() || ionic.Platform.isAndroid())){
+			window.fbAsyncInit = function() {
+				Parse.FacebookUtils.init({
+					appId      : '1631969257079836',
+					cookie     : true,
+					xfbml      : true,
+					version    : 'v2.5'
+				});
+			};
+			(function(d, s, id){
+				var js, fjs = d.getElementsByTagName(s)[0];
+				if (d.getElementById(id)) {return;}
+				js = d.createElement(s); js.id = id;
+				js.src = "//connect.facebook.net/en_US/sdk.js";
+				fjs.parentNode.insertBefore(js, fjs);
+			}(document, 'script', 'facebook-jssdk'));
+		}
+	})
 })
 
 .config(function($stateProvider, $urlRouterProvider) {
